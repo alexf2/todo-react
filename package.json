@@ -7,7 +7,8 @@
     "start:prod": "cross-env NODE_ENV=production webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack build --progress",
     "build-dev": "cross-env NODE_ENV=development webpack build --progress",
-    "build:ci": "cross-env NODE_ENV=production webpack"
+    "build:ci": "cross-env NODE_ENV=production webpack",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "husky": "^7.0.2",
     "jest": "^27.1.1",
     "less-loader": "^10.0.1",
+    "lint-staged": "^11.1.2",
     "mini-css-extract-plugin": "^2.3.0",
     "postcss": "^8.3.6",
     "postcss-loader": "^6.1.1",
@@ -58,6 +60,7 @@
     "prettier-eslint": "^13.0.0",
     "prettier-webpack-plugin": "^1.2.0",
     "style-loader": "^3.2.1",
+    "stylelint": "^13.13.1",
     "svgo-loader": "^3.0.0",
     "thread-loader": "^3.0.4",
     "ts-jest": "^27.0.5",
