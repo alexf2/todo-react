@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "lib": ["dom", "esnext", "es2019.array", "dom.iterable"],   // https://www.sitepoint.com/react-with-typescript-best-practices/
+
+        "noEmit": false,                             // Не отправлять вывод (то есть не компилировать код, а только проверить типы).
+        "declaration": false,                        // Сгенерировать соответствующий файл .d.ts
+
+        "module": "ESNext",                         // Указываем модуль генерации кода.
+        "target": "es5",
+        "moduleResolution": "node",                 // Разрешение модулей в стиле Node.js
+        "resolveJsonModule": true,                  // Включить модули, импортированные с расширением .json
+
+        "strict": true,                             // Включить все опции строгой проверки типов.
+        "allowJs": true,                            // Разрешить компиляцию JS-файлов.
+        "checkJs": false,                       	  /* Report errors in .js files. */
+
+        "noImplicitAny": false,                     /* Raise error on expressions and declarations with an implied 'any' type. */
+        // "noUnusedLocals": true,                  // Сообщать об ошибке при неиспользованных локальных элементах (переменных, функциях, импортах).
+        // "noUnusedParameters": true,              // Сообщать об ошибке при неиспользуемых параметрах.
+        "experimentalDecorators": true,             // Включить экспериментальную поддержку для декораторов ES.
+        "emitDecoratorMetadata": true,
+        "noFallthroughCasesInSwitch": true,         // Сообщать об ошибке при встрече кейсов fallthrough в инструкциях switch.
+
+        "noErrorTruncation": true,
+        "skipLibCheck": true,                       // Пропустить проверку во типов всех файлах объявлений.
+        "esModuleInterop": true,                    // Отключить импорт пространств имен. (import * as fs from "fs") and enables CJS/AMD/UMD style imports (import fs from "fs")
+        "allowSyntheticDefaultImports": true,       // Разрешить предустановленные импорты из модулей без предустановленного экспорта.
+        "forceConsistentCasingInFileNames": true,   // Запретить ссылки на один и тот же файл, написанный в другом регистре.
+        
+        "jsx": "react",                             // Поддержка JSX в файлах .tsx
+
+        "baseUrl": "./src",
+        "paths": {
+            "types/*": ["./typings/*"]
+        },
+
+        "sourceMap": true,                          // Сгенерировать соответствующий файл .map
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules/**/*", "staticfiles/**/*", "frontend/dist/**/*"]
+}

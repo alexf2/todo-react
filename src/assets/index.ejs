@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>To do list</title>
+
+        <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon %>"/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="description" content="To do list">
+
+        <% for(let cssFile of htmlWebpackPlugin.files.css) {%>
+            <link rel="stylesheet" href="<%= cssFile %>">
+        <% } %>
+    </head>
+
+    <body>
+        <div id="spaRoot"></div>
+
+        <% for(let jsFile of htmlWebpackPlugin.files.js) {%>
+            <script type="text/javascript" src="<%= jsFile %>"></script>
+        <% } %>
+    </body>
+</html>
