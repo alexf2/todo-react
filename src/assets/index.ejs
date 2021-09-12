@@ -9,16 +9,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="description" content="To do list">
 
-        <% for(let cssFile of htmlWebpackPlugin.files.css) {%>
-            <link rel="stylesheet" href="<%= cssFile %>">
+        <% for(var i=0; i < htmlWebpackPlugin.files.css.length; i++) {%>
+            <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[i] %>">
         <% } %>
     </head>
 
     <body>
         <div id="spaRoot"></div>
 
-        <% for(let jsFile of htmlWebpackPlugin.files.js) {%>
-            <script type="text/javascript" src="<%= jsFile %>"></script>
+        <% for(var j = 0; j < htmlWebpackPlugin.files.js.length; j++) {%>
+            <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[j] %>"></script>
         <% } %>
     </body>
 </html>

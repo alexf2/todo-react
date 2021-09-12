@@ -30,6 +30,7 @@
         "jsx": "react",                             // Поддержка JSX в файлах .tsx
 
         "baseUrl": "./src",
+        "rootDirs": ["."],
         "paths": {
             "types/*": ["./typings/*"]
         },
@@ -37,5 +38,5 @@
         "sourceMap": true,                          // Сгенерировать соответствующий файл .map
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules/**/*", "staticfiles/**/*", "frontend/dist/**/*"]
+    "exclude": ["**/node_modules/*", "dist"]
 }

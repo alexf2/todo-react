@@ -62,23 +62,23 @@ const rules = {
         test: /\.(jsx|js|tsx|ts)$/,
         exclude: /node_modules/,
         include: [PATHS.appRoot],
+        use: [
+            {
+                loader: 'thread-loader',
+                options: {
+                    workerParallelJobs: 50,
+                },
+            },
+            {
+                loader: 'ts-loader',
+                options: {
+                    happyPackMode: true, // используется вместе с thread-loader и ForkTsCheckerWebpackPlugin
+                    transpileOnly: true, // используется вместе с happyPackMode, thread-loader и ForkTsCheckerWebpackPlugin
+                    experimentalWatchApi: true,
+                },
+            },
+        ],
     },
-    use: [
-        {
-            loader: 'thread-loader',
-            options: {
-                workerParallelJobs: 50,
-            },
-        },
-        {
-            loader: 'ts-loader',
-            options: {
-                happyPackMode: true, // используется вместе с thread-loader и ForkTsCheckerWebpackPlugin
-                transpileOnly: true, // используется вместе с happyPackMode, thread-loader и ForkTsCheckerWebpackPlugin
-                experimentalWatchApi: true,
-            },
-        },
-    ],
     cssModules: {
         test: /\.less$/,
         include: [PATHS.app],
@@ -143,7 +143,7 @@ const rules = {
 
 module.exports = {
     target: 'web',
-    entry: ['react', 'react-dom', PATHS.indexFile], // точка входа.
+    entry: PATHS.indexFile, // точка входа.
     mode: isProduction ? 'production' : 'development', // включает оптимизации
 
     resolve: {
@@ -234,7 +234,7 @@ module.exports = {
     devServer: {
         static: {
             directory: path.join(__dirname, 'dist'),
-            publicPath: `http://localhost:${port}/dist/`,
+            // publicPath: `http://localhost:${port}/dist`,
         },
         historyApiFallback: {
             rewrites: [
