@@ -1,4 +1,4 @@
-import {hot} from 'react-hot-loader/root';
+// import {hot} from 'react-hot-loader/root';
 import React from "react";
 import * as moment from 'moment';
 
@@ -17,4 +17,4 @@ const RawApp: React.FC = () => (
     </div>
 );
 
-export const App = hot(RawApp);
+export const App = RawApp;

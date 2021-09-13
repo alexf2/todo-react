@@ -8,17 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="description" content="To do list">
-
-        <% for(var i=0; i < htmlWebpackPlugin.files.css.length; i++) {%>
-            <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[i] %>">
-        <% } %>
+        <%= htmlWebpackPlugin.tags.headTags %>
     </head>
 
     <body>
         <div id="spaRoot"></div>
-
-        <% for(var j = 0; j < htmlWebpackPlugin.files.js.length; j++) {%>
-            <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[j] %>"></script>
-        <% } %>
+        <%= htmlWebpackPlugin.tags.bodyTags %>
     </body>
 </html>

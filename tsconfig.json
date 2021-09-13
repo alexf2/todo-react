@@ -27,7 +27,7 @@
         "allowSyntheticDefaultImports": true,       // Разрешить предустановленные импорты из модулей без предустановленного экспорта.
         "forceConsistentCasingInFileNames": true,   // Запретить ссылки на один и тот же файл, написанный в другом регистре.
         
-        "jsx": "react",                             // Поддержка JSX в файлах .tsx
+        "jsx": "react-jsx",                             // Поддержка JSX в файлах .tsx
 
         "baseUrl": "./src",
         "rootDirs": ["."],

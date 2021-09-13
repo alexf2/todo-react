@@ -10,6 +10,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin'); // ?
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const WebpackChunkHash = require('webpack-chunk-hash');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 /* Custom Config */
 // загрузка индивидуальных настроек разработчика из файла custom-dev.config, который должен бытьне под Git
@@ -142,8 +143,9 @@ const rules = {
 /* Css, styles END */
 
 module.exports = {
+    context: __dirname,
     target: 'web',
-    entry: PATHS.indexFile, // точка входа.
+    entry: {spa: ['react-hot-loader/patch', PATHS.indexFile]}, // точка входа.
     mode: isProduction ? 'production' : 'development', // включает оптимизации
 
     resolve: {
@@ -190,12 +192,13 @@ module.exports = {
             template: PATHS.htmlTemplate,
             inject: false,
             hash: true,
-            chunks: ['vendor', 'styles'],
+            chunks: ['vendor', 'spa', 'styles'],
             minify: {
                 collapseWhitespace: true,
             },
             alwaysWriteToDisk: true, // в сочетании с HtmlWebpackHarddiskPlugin сохраняет index.html в dist
             chunksSortMode: 'none',
+            // scriptLoading: 'blocking',
         }),
         new HtmlWebpackHarddiskPlugin(),
         new FriendlyErrorsWebpackPlugin(),
@@ -211,8 +214,8 @@ module.exports = {
     ].filter(Boolean),
 
     optimization: {
-        moduleIds: isProduction ? 'deterministic' : 'named', // v5 advise to remove
-        minimizer: [],
+        moduleIds: isProduction ? 'deterministic' : 'named', // replaces HashedModuleIdsPlugin in v5; v5 advise to remove and use defaults
+        minimizer: [new CssMinimizerPlugin(), '...'],
         splitChunks: {
             cacheGroups: {
                 defaultVendors: {
@@ -234,7 +237,7 @@ module.exports = {
     devServer: {
         static: {
             directory: path.join(__dirname, 'dist'),
-            // publicPath: `http://localhost:${port}/dist`,
+            // publicPath: `http://localhost:${port}/`,
         },
         historyApiFallback: {
             rewrites: [
