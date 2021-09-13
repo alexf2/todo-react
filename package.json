@@ -5,6 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "start:prod": "cross-env NODE_ENV=production webpack-dev-server",
+    "start:http-prod": "npm run build && http-server dist -o -a localhost",
     "build": "cross-env NODE_ENV=production webpack build --progress",
     "build-dev": "cross-env NODE_ENV=development webpack build --progress",
     "build:ci": "cross-env NODE_ENV=production webpack",
