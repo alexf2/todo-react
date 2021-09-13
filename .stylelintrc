@@ -1,0 +1,9 @@
+{
+    "extends": [
+        "stylelint-config-prettier"
+    ],
+    "rules": {
+        "block-closing-brace-newline-before": "always",
+        "block-opening-brace-newline-after": "always"
+    }
+}

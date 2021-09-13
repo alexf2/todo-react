@@ -11,9 +11,9 @@ const getNavigatorLanguage = () => navigator.languages && navigator.languages.le
 moment.locale(getNavigatorLanguage());
 
 const RawApp: React.FC = () => (
-    <div>
+    <div className='root-node'>
         <h1>Hello world!</h1>
-        <div>Some text</div>
+        <div>Some text</div><br />
     </div>
 );
 

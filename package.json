@@ -9,7 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack build --progress",
     "build-dev": "cross-env NODE_ENV=development webpack build --progress",
     "build:ci": "cross-env NODE_ENV=production webpack",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "compile-tsc": "tsc --project ./tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,11 @@
   "author": "Alexey Fedorov",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@babel/runtime": "^7.15.4",
     "@types/jest": "^27.0.1",
     "@types/moment": "^2.13.0",
     "@types/prettier": "^2.3.2",
@@ -28,6 +34,9 @@
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "autoprefixer": "^10.3.4",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-styled-components": "^1.13.2",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.3",
@@ -52,6 +61,7 @@
     "html-webpack-plugin": "^5.3.2",
     "husky": "^7.0.2",
     "jest": "^27.1.1",
+    "less": "^4.1.1",
     "less-loader": "^10.0.1",
     "lint-staged": "^11.1.2",
     "mini-css-extract-plugin": "^2.3.0",
@@ -63,6 +73,7 @@
     "prettier-webpack-plugin": "^1.2.0",
     "style-loader": "^3.2.1",
     "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
     "svgo-loader": "^3.0.0",
     "thread-loader": "^3.0.4",
     "ts-jest": "^27.0.5",

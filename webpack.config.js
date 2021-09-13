@@ -59,8 +59,9 @@ const getCssLoader = (loadersAfter = 1, options = {}) => ({
 const getStyleLoader = () => ({loader: isProduction ? MiniCssExtractPlugin.loader : 'style-loader'});
 
 const rules = {
-    jsTs: {
-        test: /\.(jsx|js|tsx|ts)$/,
+    tsx: {
+        // test: /\.(jsx|js|tsx|ts)$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         include: [PATHS.appRoot],
         use: [
@@ -70,6 +71,7 @@ const rules = {
                     workerParallelJobs: 50,
                 },
             },
+            'babel-loader',
             {
                 loader: 'ts-loader',
                 options: {
@@ -78,6 +80,20 @@ const rules = {
                     experimentalWatchApi: true,
                 },
             },
+        ],
+    },
+    jsx: {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        include: [PATHS.appRoot],
+        use: [
+            {
+                loader: 'thread-loader',
+                options: {
+                    workerParallelJobs: 50,
+                },
+            },
+            'babel-loader',
         ],
     },
     cssModules: {
@@ -167,7 +183,8 @@ module.exports = {
 
     module: {
         rules: [
-            rules.jsTs,
+            rules.jsx,
+            rules.tsx,
             rules.css,
             rules.less,
             rules.img,
@@ -204,6 +221,7 @@ module.exports = {
         new FriendlyErrorsWebpackPlugin(),
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|ru/),
         new CopyWebpackPlugin({patterns: filesToCopy}),
+        // линтинг уже включён в pre-commit hook, поэтому, это его дублирует
         showLinting && new ESLintPlugin(),
 
         isProduction && WebpackChunkHash(),

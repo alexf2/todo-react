@@ -2,11 +2,13 @@
     "compilerOptions": {
         "lib": ["dom", "esnext", "es2019.array", "dom.iterable"],   // https://www.sitepoint.com/react-with-typescript-best-practices/
 
-        "noEmit": false,                             // Не отправлять вывод (то есть не компилировать код, а только проверить типы).
+        "noEmit": true,                              // Не отправлять вывод (то есть не компилировать код, а только проверить типы).
+                                                     // тут нужен либо транспайлер babel-loader или полифил js-core, например.
         "declaration": false,                        // Сгенерировать соответствующий файл .d.ts
 
         "module": "ESNext",                         // Указываем модуль генерации кода.
-        "target": "es5",
+        "target": "es5",                            // !!! если указано lib, то игнорируется. Без lib target определяет lib. 
+                                                    // ES5: DOM,ES5,ScriptHost; ES6: DOM,ES6,DOM.Iterable,ScriptHost
         "moduleResolution": "node",                 // Разрешение модулей в стиле Node.js
         "resolveJsonModule": true,                  // Включить модули, импортированные с расширением .json
 
@@ -27,7 +29,7 @@
         "allowSyntheticDefaultImports": true,       // Разрешить предустановленные импорты из модулей без предустановленного экспорта.
         "forceConsistentCasingInFileNames": true,   // Запретить ссылки на один и тот же файл, написанный в другом регистре.
         
-        "jsx": "react-jsx",                             // Поддержка JSX в файлах .tsx
+        "jsx": "react-jsx",                         // Поддержка JSX в файлах .tsx
 
         "baseUrl": "./src",
         "rootDirs": ["."],

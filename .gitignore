@@ -27,6 +27,8 @@ coverage
 node_modules/
 jspm_packages/
 css-modules/
+# Generated CSS from LESS
+src/**/*.css
 
 # Optional npm cache directory
 .npm
