@@ -78,6 +78,7 @@ const rules = {
                     happyPackMode: true, // используется вместе с thread-loader и ForkTsCheckerWebpackPlugin
                     transpileOnly: true, // используется вместе с happyPackMode, thread-loader и ForkTsCheckerWebpackPlugin
                     experimentalWatchApi: true,
+                    getCustomTransformers: path.join(__dirname, './webpack.ts-transformers.js'),
                 },
             },
         ],
@@ -118,6 +119,7 @@ const rules = {
             'less-loader',
         ],
     },
+    // этот пайплайн нужен на случай импорта уже скомпилированного css из внешних подключаемых npm
     css: {
         test: /\.css$/,
         use: [
