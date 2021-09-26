@@ -1,6 +1,9 @@
 // import {hot} from 'react-hot-loader/root';
 import React from "react";
 import * as moment from 'moment';
+import {Layout} from "antd";
+import {Helmet} from "react-helmet-async";
+import {Routing} from './Routing';
 
 const getNavigatorLanguage = () => navigator.languages && navigator.languages.length
     ?
@@ -10,11 +13,12 @@ const getNavigatorLanguage = () => navigator.languages && navigator.languages.le
 
 moment.locale(getNavigatorLanguage());
 
-const RawApp: React.FC = () => (
-    <div className='root-node'>
-        <h1>Hello world!</h1>
-        <div>Some text</div><br />
+export const AppRoot: React.FC = () => (
+    <div className='global__root-node'>
+        <Helmet defaultTitle='Todo list research' />
+        <Layout className='global__layout'>
+            <Routing />
+        </Layout>
     </div>
 );
 
-export const App = RawApp;

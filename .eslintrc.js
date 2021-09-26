@@ -64,6 +64,7 @@ module.exports = {
         "valid-jsdoc": 0,
         // 'no-use-before-define': 0,
         // '@typescript-eslint/no-use-before-define': ["error"],
+        "import/extensions": 0,
     },
     overrides: [
         {

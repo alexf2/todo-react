@@ -41,6 +41,7 @@ const PATHS = {
     build: path.join(__dirname, 'dist/assets'),
     tsconfig: path.join(__dirname, 'tsconfig.json'),
     globalStyles: path.join(__dirname, 'src/globalStyles'),
+    antd: path.join(__dirname, 'node_modules/antd/dist'),
 };
 const watchIgnorePaths = [/css\.d\.ts$/, /less\.d\.ts$/, /node_modules/, /dist/];
 const filesToCopy = [
@@ -106,7 +107,7 @@ const rules = {
             getCssLoader(2, {sourceMap: false, modules: true, camelCase: true, localIdentName: '[name]__[local]#[hash:base64:5]'}),
             {loader: 'typed-css-modules-loader', options: {camelCase: true, noEmit: isProduction, context: PATHS.build}},
             'postcss-loader',// конфигурируется через postcss.config.js: там добавляются плагины и префиксинг для браузеров
-            'less-loader',
+            {loader: 'less-loader', options: {lessOptions: {javascriptEnabled: true}}},
         ],
     },
     less: {
@@ -116,7 +117,7 @@ const rules = {
             getStyleLoader(),
             getCssLoader(2),
             'postcss-loader',
-            'less-loader',
+            {loader: 'less-loader', options: {lessOptions: {javascriptEnabled: true}}},
         ],
     },
     // этот пайплайн нужен на случай импорта уже скомпилированного css из внешних подключаемых npm

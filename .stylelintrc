@@ -1,13 +1,14 @@
 {
     "processors": [
-      "stylelint-processor-styled-components"
     ],
     "extends": [
-        "stylelint-config-prettier",
-        "stylelint-config-styled-components"
+        "stylelint-config-standard",
+        "stylelint-config-prettier"
     ],
     "rules": {
         "block-closing-brace-newline-before": "always",
-        "block-opening-brace-newline-after": "always"
-    }
+        "block-opening-brace-newline-after": "always",
+        "block-no-empty": null
+    },
+    "ignoreFiles": []
 }

@@ -1,3 +1,4 @@
+@import '~antd/dist/antd.less';
 @import 'colors.less';
 @import 'fonts.less';
 
@@ -22,14 +23,14 @@ dd {
 }
 
 body {
-    /*font: 400 14px Arial, Helvetica, sans-serif;*/
+    /* font: 400 14px Arial, Helvetica, sans-serif; */
     font: 400 14px @font;
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     padding: 0;
 }
 
-.clear-fix:after {
+.clear-fix::after {
     display: block;
     clear: both;
     content: '';
@@ -51,14 +52,22 @@ select {
 ul[class],
 ol[class] {
     list-style: none;
-}
-
-ul[class],
-ol[class] {
     padding: 0;
     margin: 0;
 }
 
-.root-node {
-    background: linear-gradient(to bottom, @light-grey, @grey);
+.global {
+    &__root-node {
+    }
+
+    &__layout {
+        min-height: 100vh;
+    }
+
+    &__container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
