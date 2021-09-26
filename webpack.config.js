@@ -112,7 +112,7 @@ const rules = {
     },
     less: {
         test: /\.less$/,
-        include: [PATHS.globalStyles],
+        include: [PATHS.globalStyles, PATHS.antd],
         use: [
             getStyleLoader(),
             getCssLoader(2),
