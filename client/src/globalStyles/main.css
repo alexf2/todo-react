@@ -1,0 +1,69 @@
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  src: local('Roboto'), url(../../assets/fonts/Roboto-Regular.ttf) format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Roboto-Bold';
+  font-style: normal;
+  src: local('Roboto-Bold'), url(../../assets/fonts/Roboto-Bold.ttf) format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+body {
+  /*font: 400 14px Arial, Helvetica, sans-serif;*/
+  font: 400 14px Roboto, sans-serif;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  padding: 0;
+}
+.clear-fix:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+img {
+  max-width: 100%;
+  display: inline-block;
+  border-width: 0;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+ul[class],
+ol[class] {
+  list-style: none;
+}
+ul[class],
+ol[class] {
+  padding: 0;
+  margin: 0;
+}
+.global__root-node {
+  background: linear-gradient(to bottom, #f6f7f9, #d8d8d8);
+}
