@@ -11,6 +11,9 @@
     "noImplicitAny": false,                         /* Raise error on expressions and declarations with an implied 'any' type. */
     "esModuleInterop": true,                        /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "resolveJsonModule": true,                      /* Include modules imported with '.json' extension */
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     
     "outDir": "./dist/ts",                          /* Redirect output structure to the directory. */
     "rootDir": ".",                                 /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */

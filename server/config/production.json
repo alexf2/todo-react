@@ -1,0 +1,12 @@
+ {
+  "logger": {
+    "level": "error",
+    "transport": "Console"
+  },
+  "data": {
+    "connectionString": "mongodb://127.0.0.1:27017?appName=todoService&retryWrites=true",
+    "user": "admin",
+    "password": "password",
+    "db": "todo"
+  }
+}
