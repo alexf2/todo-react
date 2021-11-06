@@ -1,4 +1,5 @@
 import {ErrorRequestHandler} from 'express';
+import {Error} from 'mongoose';
 import {Logger, CustomError, addRequestId} from '../helpers';
 
 /**
@@ -14,21 +15,19 @@ export const catchError = (logger: Logger): ErrorRequestHandler => (err, req, re
         return;
     }
 
-    if (err.error && err.error.isJoi) { // ошибка валидатора request
-        const e = err as any;
-        const {error} = e;
+    if (err instanceof Error.CastError) { // ошибка валидатора request
         httpError = {
             code: 400,
-            name: 'ValidationError',
-            message: `Bad '${e.type}' parameter: ${error!.message}`,
-            data: e.value,
+            name: 'CastError',
+            message: err.message,
+            data: err.value,
         };
         logError = {
             code: 400,
-            name: 'ValidationError',
-            message: `Bad '${e.type}' parameter: ${error!.message}`,
-            data: e.value,
-            stack: error!.stack,
+            name: 'CastError',
+            message: err.message,
+            data: err.value,
+            stack: err.stack,
         };
     } else if (err instanceof CustomError) {
         httpError = err.mapToHttpResponse();

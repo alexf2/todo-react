@@ -1,7 +1,7 @@
-import {Request} from 'express';
 import {Config} from './Config';
+import {GenericRequest} from './safeAsyncHandler';
 
-export const addRequestId = (req: Request, meta?: Record<string, unknown>) => {
+export const addRequestId = (req: GenericRequest, meta?: Record<string, unknown>) => {
     const {user} = req as any;
 
     return {
@@ -11,6 +11,6 @@ export const addRequestId = (req: Request, meta?: Record<string, unknown>) => {
     };
 }
 
-export const getRequestIdMeta = (req: Request) => ({
+export const getRequestIdMeta = (req: GenericRequest) => ({
     meta: addRequestId(req),
 });

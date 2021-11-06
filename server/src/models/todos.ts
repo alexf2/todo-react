@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {getModelForClass, prop, modelOptions, defaultClasses, Ref} from '@typegoose/typegoose';
 
 export enum PriorityEnum {
@@ -51,7 +52,7 @@ export interface Todo extends defaultClasses.Base {
 }
 @modelOptions({options: {customName: 'todos'}, schemaOptions: {collection: 'todos'}})
 export class Todo extends defaultClasses.TimeStamps {
-    @prop({type: () => String, required: true})
+    @prop({type: () => String, required: true, index: true})
     public description!: string;
 
     @prop({type: () => Date})
@@ -71,10 +72,23 @@ export class Todo extends defaultClasses.TimeStamps {
 
     @prop({type: () => Boolean})
     public isArchived?: boolean;
-
-    // dueDays, isOnTime, isFinished - calculated
 }
 
-export const domainAreaModel = getModelForClass(DomainArea);
-export const priorityModel = getModelForClass(Priority);
-export const todoModel = getModelForClass(Todo);
+export const addCalculatedTodo = (item: Todo) => {
+    const {dueDate} = item;
+    const now = moment();
+
+    const dueDays = dueDate ? moment(dueDate).diff(now, 'days') : null;
+    const isOnTime = dueDate ? now.isSameOrBefore(dueDate) : true;
+
+    return {...item, dueDays, isOnTime, isFinished: !!item.finishedOn};
+};
+
+export const addCalculatedTodos = (items: Todo[]) => items.map(addCalculatedTodo);
+
+// on grouping items are wrapped
+export const addCalculatedTodosGroup = (items: any[]) => items.map(item => ({...item, items: addCalculatedTodos(item.items)}));
+
+export const DomainAreaModel = getModelForClass(DomainArea);
+export const PriorityModel = getModelForClass(Priority);
+export const TodoModel = getModelForClass(Todo);

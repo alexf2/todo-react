@@ -2,12 +2,14 @@ import moment from 'moment'
 import {DomainArea, Priority, PriorityEnum, AreaEnum} from './todos';
 
 const START_DATE = moment('2021-11-27', moment.HTML5_FMT.DATE);
+const OLD_DATE = moment('2019-09-15', moment.HTML5_FMT.DATE);
 
 export const priorities = [
     {code: PriorityEnum.Low, name: 'Low'},
     {code: PriorityEnum.Normal, name: 'Normal'},
     {code: PriorityEnum.High, name: 'High'},
     {code: PriorityEnum.Critical, name: 'Critical'},
+    {code: 10, name: 'SubCritical', deactivatedOn: moment('2020-07-15', moment.HTML5_FMT.DATE)},
 ];
 
 export const area = [
@@ -95,6 +97,14 @@ export const getTodos = (p: Priority[], da: DomainArea[]) => {
             estimationHours: 12,
             priority: getP(PriorityEnum.Low),
             domainArea: getD(AreaEnum.PhotoProject),
+        },
+        {
+            description: 'Process Kostroma trip photos',
+            dueDate: OLD_DATE.add(25, 'day'),
+            estimationHours: 25,
+            priority: getP(PriorityEnum.Low),
+            domainArea: getD(AreaEnum.PhotoProject),
+            isArchived: true,
         },
     ];
 }

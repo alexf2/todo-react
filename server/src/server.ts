@@ -11,10 +11,11 @@ import {
     getUnhandledErrorHandler,
     getUnhandledRejectionHandler,
 } from './middleware';
-import {TodoController} from './controllers';
+import {TodoController, ReferenceController} from './controllers';
 import {loggers, Logger} from './helpers';
 import {ConnectionManager} from './ConnectionManager';
-import {iniDb} from './models';
+import {iniDb} from './models/initializeDb';
+
 
 export class SimpleExpressServer {
     private httpServer?: http.Server;
@@ -26,6 +27,7 @@ export class SimpleExpressServer {
         private logger: Logger,
         private app: Application = express()) {
 
+        // https://evanhahn.com/gotchas-with-express-query-parsing-and-how-to-avoid-them/
         app.set('query parser', queryString => new URLSearchParams(queryString));
 
         this.logger.info('Server is being initialized...');
@@ -35,7 +37,7 @@ export class SimpleExpressServer {
         this.logger.info('Server is about to run');
 
         await ConnectionManager.open();
-        iniDb(loggers.Initialization);
+        // iniDb(loggers.Initialization); // populating Db
         this.addGlobalPreMiddlewares();
         this.addControllers();
         this.addGlobalPostMiddlewares();
@@ -110,6 +112,7 @@ export class SimpleExpressServer {
     // добавляется после GlobalMiddlewares
     private readonly addControllers = () => {
         new TodoController(loggers.TodoService).install(this.app);
+        new ReferenceController(loggers.RefService).install(this.app);
     }
 
     private readonly addProcessErrorHandlers = () => {

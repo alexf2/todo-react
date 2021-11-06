@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-base",
+  "name": "nodejs-todo",
   "author": "Alexey Fedorov",
   "license": "ISC",
   "version": "1.0.0",
@@ -48,6 +48,8 @@
     "convict": "6.0.0",
     "convict-format-with-validator": "6.0.0",
     "cors": "2.8.5",
+    "escape-string-regexp": "4.0.0",
+    "esm": "^3.2.25",
     "express": "4.17.1",
     "helmet": "4.6.0",
     "moment": "2.29.1",

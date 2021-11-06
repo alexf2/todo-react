@@ -1,9 +1,9 @@
 import {connection} from 'mongoose';
-import {todoModel, priorityModel, domainAreaModel, DomainArea, Priority} from './todos';
+import {TodoModel, PriorityModel, DomainAreaModel, DomainArea, Priority} from './todos';
 import {Logger} from '../helpers';
 import {priorities as prioritiesData, area as areaData, getTodos} from './data';
 
-const collections = [todoModel.modelName, priorityModel.modelName, domainAreaModel.modelName];
+const collections = [TodoModel.modelName, PriorityModel.modelName, DomainAreaModel.modelName];
 
 const saveRemoveCollection = async (logger: Logger, docs: string[]) => {
     for (const n of docs) {
@@ -38,9 +38,9 @@ const createCollections = async (logger: Logger) => saveCreateCollections(logger
 
 const populateRefs = async (logger: Logger) => {
     const priorities =
-        await priorityModel.insertMany(prioritiesData);
+        await PriorityModel.insertMany(prioritiesData);
 
-    const domainArea = await domainAreaModel.insertMany(areaData);
+    const domainArea = await DomainAreaModel.insertMany(areaData);
 
     logger.info(`Refs populated: ${priorities.length}, ${domainArea.length}`);
 
@@ -48,7 +48,7 @@ const populateRefs = async (logger: Logger) => {
 }
 
 const populateTodos = async (logger: Logger, p: Priority[], da: DomainArea[]) => {
-    const result = await Promise.all(getTodos(p, da).map(item => todoModel.create(item)));
+    const result = await Promise.all(getTodos(p, da).map(item => TodoModel.create(item)));
     logger.info(`Todos populated ${result.length}`);
 }
 

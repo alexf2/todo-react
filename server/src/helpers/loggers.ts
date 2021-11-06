@@ -30,6 +30,7 @@ class LoggersManager {
     private initializationLogger: W.Logger | undefined;
     private coreLogger: W.Logger | undefined;
     private todoServiceLogger: W.Logger | undefined;
+    private refServiceLogger: W.Logger | undefined;
 
     private readonly create = () => {
         if (!this.isCreated) {
@@ -72,7 +73,12 @@ class LoggersManager {
             });
 
             this.todoServiceLogger = W.createLogger({
-                defaultMeta: {component: 'MEM_USER_SERVICE'},
+                defaultMeta: {component: 'TODO_SERVICE'},
+                ...baseConfig,
+            });
+
+            this.refServiceLogger = W.createLogger({
+                defaultMeta: {component: 'REFERENCE_SERVICE'},
                 ...baseConfig,
             });
         }
@@ -91,6 +97,11 @@ class LoggersManager {
     public get TodoService() {
         this.create();
         return this.todoServiceLogger!;
+    }
+
+    public get RefService() {
+        this.create();
+        return this.refServiceLogger!;
     }
 }
 
