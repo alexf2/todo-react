@@ -24,14 +24,15 @@ export enum AreaEnum {
     PayingBills,
     ECommerceProj,
     LeisureTime,
+    ZTest,
 }
 
 interface Reference extends defaultClasses.Base {
 }
 class Reference extends defaultClasses.TimeStamps
 {
-    @prop({type: () => String, required: true, unique: true, index: true})
-    public code!: string;
+    @prop({type: () => Number, required: true, unique: true, index: true})
+    public code!: number;
 
     @prop({type: () => String, required: true})
     public name!: string;
@@ -40,17 +41,17 @@ class Reference extends defaultClasses.TimeStamps
     public deactivatedOn?: Date;
 }
 
-@modelOptions({options: {customName: 'domainAreas'}, schemaOptions: {collection: 'domainAreas'}})
+@modelOptions({options: {customName: 'domainAreas'}, schemaOptions: {collection: 'domainAreas', versionKey: false}})
 export class DomainArea extends Reference {
 }
 
-@modelOptions({options: {customName: 'priorities'}, schemaOptions: {collection: 'priorities'}})
+@modelOptions({options: {customName: 'priorities'}, schemaOptions: {collection: 'priorities', versionKey: false}})
 export class Priority extends Reference {
 }
 
 export interface Todo extends defaultClasses.Base {
 }
-@modelOptions({options: {customName: 'todos'}, schemaOptions: {collection: 'todos'}})
+@modelOptions({options: {customName: 'todos'}, schemaOptions: {collection: 'todos', versionKey: false}})
 export class Todo extends defaultClasses.TimeStamps {
     @prop({type: () => String, required: true, index: true})
     public description!: string;
@@ -75,10 +76,10 @@ export class Todo extends defaultClasses.TimeStamps {
 }
 
 export const addCalculatedTodo = (item: Todo) => {
-    const {dueDate} = item;
-    const now = moment();
+    const {dueDate, finishedOn} = item;
+    const now = moment().utc().startOf('day');
 
-    const dueDays = dueDate ? moment(dueDate).diff(now, 'days') : null;
+    const dueDays = dueDate ? moment(dueDate).diff(finishedOn || now, 'days') : null;
     const isOnTime = dueDate ? now.isSameOrBefore(dueDate) : true;
 
     return {...item, dueDays, isOnTime, isFinished: !!item.finishedOn};

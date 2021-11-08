@@ -2,19 +2,18 @@ import escapeEx from 'escape-string-regexp';
 import {BadRequestError} from '../helpers';
 
 enum Grouping {
-    None,
     ByDomain = 'domain',
     ByPriority = 'priority',
 }
-enum Ordering {
-    ByPriority ='priority',
-    ByDueDate = 'duedate',
-    ByPriorityAndDueDate = 'priorityandduedate',
-    ByCreatedAt = 'createdat',
-    ByFinishedOn = 'finishedon',
+export enum Ordering {
+    ByPriority ='priority', // desc
+    ByDueDate = 'duedate', // asc
+    ByPriorityAndDueDate = 'priorityandduedate', // desc, asc
+    ByCreatedAt = 'createdate', // desc
+    ByFinishedOn = 'finishedon', // desc
 }
 
-export const getTodoFilter = (searchString?: string|null, showArchived?: boolean|null) => {
+export const getTodoFilter = (searchString?: string|null, showArchived?: boolean|null, onlyArchived?: boolean|null) => {
     if (typeof searchString === 'string') {
         searchString = searchString.trim();
     }
@@ -33,7 +32,9 @@ export const getTodoFilter = (searchString?: string|null, showArchived?: boolean
     if (needsSearch) {
         searchFilter = {description: {$regex: escapeEx(searchString!)}};
     }
-    if (hideArchived) {
+    if (onlyArchived) {
+        archiveFilter = {$and: [{isArchived: true}]};
+    } else if (hideArchived) {
         archiveFilter = {$or: [{isArchived: {$exists: false}}, {isArchived: false}]};
     }
 
@@ -50,25 +51,24 @@ export const getTodoFilter = (searchString?: string|null, showArchived?: boolean
     return res;
 }
 
-export const getOrdering = (order: string) => {
+export const getOrdering = (order: string|null) => {
     if (!order) {
         return;
     }
 
-    let field;
-    switch(order.toLocaleLowerCase()) {
+    const ord = order.toLocaleLowerCase();
+    switch(ord) {
         case Ordering.ByPriority:
             return {'priority.code': -1};
 
         case Ordering.ByDueDate:
-            return {dueDate: -1};
+            return {dueDate: 1};
 
         case Ordering.ByPriorityAndDueDate:
-            return {'priority.code': -1, dueDate: -1};
+            return {'priority.code': -1, dueDate: 1};
 
         case Ordering.ByCreatedAt:
-            field = 'createdAt';
-            break;
+            return {createdAt: -1};
 
         case Ordering.ByFinishedOn:
             return {finishedOn: -1};
@@ -76,7 +76,6 @@ export const getOrdering = (order: string) => {
         default:
             throw new BadRequestError('GET filtering', `Illegal sorting order ${order}`, {order});
     }
-    return {[field]: 1};
 }
 
 export const getGrouping = (grouping: string) => {
@@ -85,13 +84,41 @@ export const getGrouping = (grouping: string) => {
     }
 
     switch(grouping.toLocaleLowerCase()) {
-        case Grouping.None:
-            return;
         case Grouping.ByDomain:
-            return 'domainArea.code';
+            return 'domainArea';
         case Grouping.ByPriority:
-            return 'priority.code';
+            return 'priority';
         default:
             throw new BadRequestError('GET grouping', `Illegal grouping ${grouping}`, {grouping});
+    }
+}
+
+export const getGroupSortingSign = (grouping: string) => {
+    if (!grouping) {
+        return;
+    }
+
+    switch(grouping.toLocaleLowerCase()) {
+        case Grouping.ByDomain:
+            return 1;
+        case Grouping.ByPriority:
+            return -1;
+        default:
+            throw new BadRequestError('GET grouping sign', `Illegal grouping ${grouping}`, {grouping});
+    }
+}
+
+export const getGroupSortingField = (grouping: string) => {
+    if (!grouping) {
+        return;
+    }
+
+    switch(grouping.toLocaleLowerCase()) {
+        case Grouping.ByDomain:
+            return 'name';
+        case Grouping.ByPriority:
+            return 'code';
+        default:
+            throw new BadRequestError('GET group sorting field', `Illegal grouping ${grouping}`, {grouping});
     }
 }
