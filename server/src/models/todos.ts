@@ -1,5 +1,6 @@
 import moment from 'moment'
 import {getModelForClass, prop, modelOptions, defaultClasses, Ref} from '@typegoose/typegoose';
+import {dueDateValidator, finishedOnValidator} from './validators';
 
 export enum PriorityEnum {
     Low = 1,
@@ -56,13 +57,19 @@ export class Todo extends defaultClasses.TimeStamps {
     @prop({type: () => String, required: true, index: true})
     public description!: string;
 
-    @prop({type: () => Date})
+    @prop({
+        type: () => Date,
+        validate: {validator: dueDateValidator},
+    })
     public dueDate?: Date;
 
-    @prop({type: () => Number})
+    @prop({type: () => Number, min: 0.1, default: 4})
     public estimationHours?: number;
 
-    @prop({type: () => Date})
+    @prop({
+        type: () => Date,
+        validate: {validator: finishedOnValidator},
+    })
     public finishedOn?: Date;
 
     @prop({ref: () => Priority, required: true})

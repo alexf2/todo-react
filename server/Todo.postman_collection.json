@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "42e54dfa-379e-4cc8-b0e9-a120d49d3aa9",
+		"name": "Todo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Refs",
+			"item": [
+				{
+					"name": "Get Priorities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "GetPriorities with archived",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "GetDomains",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "GetDomains with archive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Todos",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all by priority",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos?order=priority",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "priority"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all by finishedOn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos?order=finishedOn",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "finishedOn"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grouping by priority",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos?grouping=priority&order=priority",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "grouping",
+									"value": "priority"
+								},
+								{
+									"key": "order",
+									"value": "priority"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos/618810fac73b23b0c2bb3f90",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos",
+								"618810fac73b23b0c2bb3f90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById_NotFound",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos/618861de14ad21e2ec8f5400",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos",
+								"618861de14ad21e2ec8f5400"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById_New1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos/618861de14ad21e2ec8f54cb",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos",
+								"618861de14ad21e2ec8f54cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all, including archive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos?showArchived=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "showArchived",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get only archived",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos?onlyArchived=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "onlyArchived",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos/6188121d19b6e7a506b0e386",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos",
+								"6188121d19b6e7a506b0e386"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grouping by domain",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/todos?grouping=domain",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "grouping",
+									"value": "domain"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Test new created todo 1\",\r\n    \"dueDate\": \"2021-12-01\",\r\n    \"estimationHours\": \"33\",\r\n    \"priority\": \"188156dc034e2bde5d2b7161\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/todos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updating new1",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Test new created todo 3_upd\",\r\n    \"estimationHours\": \"35\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/todos/618861de14ad21e2ec8f54cb",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos",
+								"618861de14ad21e2ec8f54cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating new Validation errors",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"\",\r\n    \"dueDate\": \"2021-12-01\",\r\n    \"estimationHours\": \"33\",\r\n    \"priority\": \"188156dc034e2bde5d2b7161\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/todos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating new Validation errors: estimationHours",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"\",\r\n    \"dueDate\": \"2021-12-01\",\r\n    \"estimationHours\": \"33\",\r\n    \"priority\": \"188156dc034e2bde5d2b7161\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/todos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:5000/api"
+		}
+	]
+}

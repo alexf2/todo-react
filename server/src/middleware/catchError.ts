@@ -15,16 +15,16 @@ export const catchError = (logger: Logger): ErrorRequestHandler => (err, req, re
         return;
     }
 
-    if (err instanceof Error.CastError) { // ошибка валидатора request
+    if (err instanceof Error.CastError || err.name === 'ValidationError') { // ошибка валидатора request
         httpError = {
             code: 400,
-            name: 'CastError',
+            name: err.name || 'CastError',
             message: err.message,
             data: err.value,
         };
         logError = {
             code: 400,
-            name: 'CastError',
+            name: err.name || 'CastError',
             message: err.message,
             data: err.value,
             stack: err.stack,

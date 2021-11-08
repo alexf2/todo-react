@@ -10,6 +10,7 @@ import {
     getBadRequestErrorHandler,
     getUnhandledErrorHandler,
     getUnhandledRejectionHandler,
+    userAuthMiddleware,
 } from './middleware';
 import {TodoController, ReferenceController} from './controllers';
 import {loggers, Logger} from './helpers';
@@ -97,6 +98,7 @@ export class SimpleExpressServer {
         this.app.use(
             requestId,
             this.restartingMiddleware,
+            userAuthMiddleware(loggers.Core),
             cors(),
             express.json(),
         );

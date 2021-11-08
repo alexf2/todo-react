@@ -1,5 +1,4 @@
 import moment from 'moment'
-import {ObjectId} from 'mongodb';
 import {DomainArea, Priority, PriorityEnum, AreaEnum} from './todos';
 
 const START_DATE = moment('2021-11-27', moment.HTML5_FMT.DATE).utc().startOf('day');
