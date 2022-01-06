@@ -41,7 +41,9 @@ export class TodoController extends ControllerBase {
 
             filter && pipeline.push({$match: filter});
             pipeline.push({$lookup: {from: 'priorities', localField: 'priority', foreignField: '_id', as: 'priority'}});
+            pipeline.push({$unwind: '$priority'});
             pipeline.push({$lookup: {from: 'domainAreas', localField: 'domainArea', foreignField: '_id', as: 'domainArea'}});
+            pipeline.push({$unwind: '$domainArea'});
             ordering && pipeline.push({$sort: ordering}); /// sorting each group inside
             pipeline.push(
                 {$group: {

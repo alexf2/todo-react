@@ -1,5 +1,5 @@
 import moment from 'moment'
-import {getModelForClass, prop, modelOptions, defaultClasses, Ref} from '@typegoose/typegoose';
+import {DocumentType, getModelForClass, prop, modelOptions, defaultClasses, Ref} from '@typegoose/typegoose';
 import {dueDateValidator, finishedOnValidator} from './validators';
 
 export enum PriorityEnum {
@@ -28,7 +28,7 @@ export enum AreaEnum {
     ZTest,
 }
 
-interface Reference extends defaultClasses.Base {
+interface Reference extends defaultClasses.Base { // интерфейсы с одним именем объединяются
 }
 class Reference extends defaultClasses.TimeStamps
 {
@@ -54,6 +54,9 @@ export interface Todo extends defaultClasses.Base {
 }
 @modelOptions({options: {customName: 'todos'}, schemaOptions: {collection: 'todos', versionKey: false}})
 export class Todo extends defaultClasses.TimeStamps {
+    @prop()
+    id!: string;
+
     @prop({type: () => String, required: true, index: true})
     public description!: string;
 
@@ -72,10 +75,10 @@ export class Todo extends defaultClasses.TimeStamps {
     })
     public finishedOn?: Date;
 
-    @prop({ref: () => Priority, required: true})
+    @prop({ref: () => Priority, required: true, justOne: true})
     public priority!: Ref<Priority>;
 
-    @prop({ref: () => DomainArea})
+    @prop({ref: () => DomainArea, justOne: true})
     public domainArea?: Ref<DomainArea>;
 
     @prop({type: () => Boolean})
