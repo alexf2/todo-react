@@ -23,22 +23,22 @@ const App: React.FC = () => {
 
     const onFilter = useCallback((value: ArrayElement<FilteringRef>) => {
         dispatch(createAction<FilterArchiveAction>(ActionType.FilterArchive, {filtering: value.code}));
-        dispatch(refreshTodosAction());
+        setTimeout(() => dispatch(refreshTodosAction()), 0);
     }, []);
 
     const onGrouping = useCallback((value: Partial<ArrayElement<GroupingRef>>) => {
-        dispatch(createAction<SetGroupingAction>(ActionType.SetGrouping, {grouping: value.code}));
-        dispatch(refreshTodosAction());
+        dispatch(createAction<SetGroupingAction>(ActionType.SetGrouping, {grouping: value && value.code}));
+        setTimeout(() => dispatch(refreshTodosAction()), 0);
     }, []);
 
     const onSorting = useCallback((value: Partial<ArrayElement<OrderingRef>>) => {
-        dispatch(createAction<SetOrderingAction>(ActionType.SetOrdering, {ordering: value.code}));
-        dispatch(refreshTodosAction());
+        dispatch(createAction<SetOrderingAction>(ActionType.SetOrdering, {ordering: value && value.code}));
+        setTimeout(() => dispatch(refreshTodosAction()), 0);
     }, []);
 
     const onSearching = useCallback((value: string) => {
         dispatch(createAction<FilterByDescriptionAction>(ActionType.FilterByDescription, {search: value}));
-        dispatch(refreshTodosAction());
+        setTimeout(() => dispatch(refreshTodosAction()), 0);
     }, []);
 
     return <div className='global__root-node'>

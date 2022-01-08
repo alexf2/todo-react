@@ -113,6 +113,7 @@ export type ErrorTodosAction = BaseErrorAction<ActionType.ErrorTodos>;
 
 export const refreshTodosAction = () => async (dispatch: Dispatch, state: Storage): Promise<void> => {
     const {transits} = state;
+
     const req = {
         grouping: transits.grouping,
         order: transits.ordering,

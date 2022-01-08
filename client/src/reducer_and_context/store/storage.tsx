@@ -1,4 +1,4 @@
-import React, {useReducer, useCallback, createContext, ReactChild, ReactChildren, FC, useEffect, useContext} from "react";
+import React, {useReducer, useRef, useCallback, createContext, ReactChild, ReactChildren, FC, useEffect, useContext} from "react";
 import {Storage, initialState} from '../../typings/storage';
 import {mainReducer} from './reducers';
 import {Dispatch, getTodosAction, getDomainAreasAction, getPrioritiesAction} from './actions';
@@ -15,9 +15,12 @@ type StorageProviderProps = {
 
 export const StorageProvider: FC<StorageProviderProps> = ({children}) => {
     const [state, dispatchBase] = useReducer(mainReducer, initialState);
+    const refState = useRef({});
+
+    refState.current = state;
     const dispatch = useCallback(
-        action => typeof action === 'function' ? action(dispatch, state) : dispatchBase(action),
-        [dispatchBase],
+        action => typeof action === 'function' ? action(dispatch, refState.current) : dispatchBase(action),
+        [],
     );
 
     const initialRequest = {

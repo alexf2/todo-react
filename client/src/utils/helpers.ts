@@ -14,9 +14,9 @@ export const storageToFilteringValue = (stg: Storage): ArchiveFiltering => {
 export const filteringValuesToStorage = (flt: ArchiveFiltering) => {
     switch (flt) {
         case ArchiveFiltering.Active: // 0
-            return {showArchived: false, onlyArchived: false};
+            return {showArchived: undefined, onlyArchived: undefined};
         case ArchiveFiltering.All: // 1
-            return {showArchived: true, onlyArchived: false};
+            return {showArchived: true, onlyArchived: undefined};
         default: // 2
             return {showArchived: true, onlyArchived: true};
     }
