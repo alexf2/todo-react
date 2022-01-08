@@ -78,6 +78,7 @@ module.exports = {
             files: ['*.ts', '*.tsx'],
             rules: {
                 '@typescript-eslint/no-unused-expressions': 'off',
+                '@typescript-eslint/explicit-module-boundary-types': 'off',
             },
             parserOptions: {
                 project: ['./tsconfig.json'], // Specify it only for TypeScript files
