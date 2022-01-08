@@ -65,6 +65,7 @@ module.exports = {
         // 'no-use-before-define': 0,
         // '@typescript-eslint/no-use-before-define': ["error"],
         "import/extensions": 0,
+        "react/prop-types": 0,
     },
     overrides: [
         {
@@ -75,6 +76,9 @@ module.exports = {
         },
         {
             files: ['*.ts', '*.tsx'],
+            rules: {
+                '@typescript-eslint/no-unused-expressions': 'off',
+            },
             parserOptions: {
                 project: ['./tsconfig.json'], // Specify it only for TypeScript files
                 tsconfigRootDir: './',

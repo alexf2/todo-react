@@ -44,6 +44,12 @@ export type FilterResult<T> = Group<T>[] | T[];
 
 export type AddTodoParams = Omit<Todo, 'id' | '_id' | 'createdAt' | 'updatedAt'>;
 
+export enum ArchiveFiltering {
+    Active,
+    All,
+    OnlyArchive,
+}
+
 
 export const getTodos = (params: TodoRequest): Promise<AxiosResponse<FilterResult<TodoExt>>> =>
     axInst.get('/todos', {params});

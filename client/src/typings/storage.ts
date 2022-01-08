@@ -20,17 +20,26 @@ export type Storage = {
         domainAreasIsLoading: boolean;
         prioritiesIsloading: boolean;
 
+        // Todo errors
         todosError?: string;
         oneTodoError: ErrInfo;
         addingTodoError?: string;
         updatingTodoError: ErrInfo;
         removingTodoError: ErrInfo;
 
+        // Refs errors
         domainError?: string;
         priorityError?: string;
 
+        // Filtering and presenting
         grouping?: Grouping;
         ordering?: Ordering;
+        search?: string;
+        showArchived?: boolean;
+        onlyArchived?: boolean;
+
+        editingNewTodo?: boolean;
+        editingTodo?: Id;
     };
 };
 

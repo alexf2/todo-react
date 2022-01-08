@@ -28,7 +28,13 @@ import {
     LoadingPrioritiesAction,
     GotPrioritiesAction,
     ErrorPrioritiesAction,
+    EditingTodoAction,
+    FilterArchiveAction,
+    SetGroupingAction,
+    SetOrderingAction,
+    FilterByDescriptionAction,
 } from './actions';
+import {filteringValuesToStorage} from '../../utils/helpers';
 
 type Transits = Storage['transits'];
 type LoadingKey = 'todosIsLoading' | 'addingTodo' | 'domainAreasIsLoading' | 'prioritiesIsloading';
@@ -179,6 +185,43 @@ export const mainReducer = (state: Storage = initialState, action: BaseAction<Ac
         case ActionType.ErrorPriorities:
             return produce(state, draft => {
                 draft.transits.priorityError = (action as ErrorPrioritiesAction).message;
+            });
+
+        // editing
+        case ActionType.EditingNewTodo:
+            return produce(state, draft => {
+                draft.transits.editingNewTodo = true;
+            });
+        case ActionType.EditingTodo:
+            return produce(state, draft => {
+                draft.transits.editingTodo = (action as EditingTodoAction).todo._id;
+            });
+        case ActionType.EndEditingTodo:
+            return produce(state, draft => {
+                draft.transits.editingNewTodo = false;
+                draft.transits.editingTodo = undefined;
+            });
+
+        // filtering
+        case ActionType.FilterArchive:
+            return produce(state, draft => {
+                const {filtering} = (action as FilterArchiveAction);
+                draft.transits = {...draft.transits, ...filteringValuesToStorage(filtering)};
+            });
+        case ActionType.SetGrouping:
+            return produce(state, draft => {
+                const {grouping} = (action as SetGroupingAction);
+                draft.transits.grouping = grouping;
+            });
+        case ActionType.SetOrdering:
+            return produce(state, draft => {
+                const {ordering} = (action as SetOrderingAction);
+                draft.transits.ordering = ordering;
+            });
+        case ActionType.FilterByDescription:
+            return produce(state, draft => {
+                const {search} = (action as FilterByDescriptionAction);
+                draft.transits.search = search;
             });
 
         default:

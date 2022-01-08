@@ -1,9 +1,12 @@
-import React, {useReducer, useCallback, createContext, ReactChild, ReactChildren, FC, useEffect} from "react";
+import React, {useReducer, useCallback, createContext, ReactChild, ReactChildren, FC, useEffect, useContext} from "react";
 import {Storage, initialState} from '../../typings/storage';
 import {mainReducer} from './reducers';
 import {Dispatch, getTodosAction, getDomainAreasAction, getPrioritiesAction} from './actions';
 
-type StateContextType = {state: Storage, dispatch: Dispatch};
+type StateContextType = {
+    state: Storage,
+    dispatch: Dispatch,
+};
 const StateContext = createContext<StateContextType>({state: initialState, dispatch: (() => null) as Dispatch});
 
 type StorageProviderProps = {
@@ -29,3 +32,5 @@ export const StorageProvider: FC<StorageProviderProps> = ({children}) => {
 
     return <StateContext.Provider value={{state, dispatch}}>{children}</StateContext.Provider>;
 }
+
+export const useStore = (): StateContextType => useContext(StateContext);

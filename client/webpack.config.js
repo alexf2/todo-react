@@ -100,12 +100,16 @@ const rules = {
     },
     cssModules: {
         test: /\.less$/,
-        include: [PATHS.app],
+        include: [PATHS.appRoot],
         exclude: [PATHS.globalStyles],
         use: [
             getStyleLoader(),
-            getCssLoader(2, {sourceMap: false, modules: true, camelCase: true, localIdentName: '[name]__[local]#[hash:base64:5]'}),
-            {loader: 'typed-css-modules-loader', options: {camelCase: true, noEmit: isProduction, context: PATHS.build}},
+            getCssLoader(2, {sourceMap: !isProduction, modules: {
+                localIdentName: '[name]__[local]#[hash:base64:5]'},
+            }),
+            {loader: 'typed-css-modules-loader',
+                options: {camelCase: true, noEmit: isProduction, context: PATHS.build},
+            },
             'postcss-loader',// конфигурируется через postcss.config.js: там добавляются плагины и префиксинг для браузеров
             {loader: 'less-loader', options: {lessOptions: {javascriptEnabled: true}}},
         ],
@@ -188,6 +192,7 @@ module.exports = {
         rules: [
             rules.jsx,
             rules.tsx,
+            rules.cssModules,
             rules.css,
             rules.less,
             rules.img,

@@ -11,7 +11,10 @@ import {
     deleteTodo,
     getDomainAreas,
     getPriorities,
-    Group} from '../../utils/api';
+    Group,
+    Grouping,
+    Ordering,
+    ArchiveFiltering} from '../../utils/api';
 
 export enum ActionType {
     LoadingTodos,
@@ -41,9 +44,20 @@ export enum ActionType {
     LoadingPriorities,
     GotPriorities,
     ErrorPriorities,
+
+    // 
+    FilterArchive,
+    SetGrouping,
+    SetOrdering,
+    FilterByDescription,
+
+    EditingNewTodo,
+    EditingTodo,
+    EndEditingTodo,
 }
 
-export type Dispatch = <A extends BaseAction<ActionType>>(action: A, ...extraArgs: any[]) => A;
+type Func = (dispatch: Dispatch, storage: any) => Promise<void>;
+export type Dispatch = <A extends BaseAction<ActionType> | Func>(action: A, ...extraArgs: any[]) => A;
 
 export type BaseAction<T> = {
     type: T;
@@ -66,7 +80,7 @@ const createErrorDescription = (err: Error, descr?: string) => {
     return descr ? `${descr}: ${message}` : message;
 }
 
-const createAction = <T extends ActionType>(type: T, data: Record<string, unknown>) => ({type, ...data});
+export const createAction = <T>(type: ActionType, data?: Omit<T, 'type'>): (T & BaseAction<ActionType>) => ({type, ...data} as any);
 export const beginLoading = <T extends ActionType>(type: T, data?: Record<string, unknown>): BaseLoadingAction<T> => ({type, isLoading: true, ...data});
 export const endLoading = <T extends ActionType>(type: T, data?: Record<string, unknown>): BaseLoadingAction<T> => ({type, isLoading: false, ...data});
 const createErrorAction = <T extends ActionType>(type: T, err: Error, descr?: string, data?: Record<string, unknown>) =>
@@ -81,9 +95,7 @@ export const getTodosAction = (req: TodoRequest) => async (dispatch: Dispatch): 
         const result = req.grouping === undefined ?
             {todos, groupedTodos: []} : {todos: [], groupedTodos: todos};
 
-        console.log(result);
-
-        dispatch(createAction(ActionType.GotTodos, result));
+        dispatch(createAction<GotTodosAction>(ActionType.GotTodos, result as any));
     } catch (error) {
         console.error(error);
         dispatch(createErrorAction(ActionType.ErrorTodos, error as Error, 'Loading todos'));
@@ -99,6 +111,18 @@ export type GotTodosAction = BaseAction<ActionType.GotTodos> & {
 export type ErrorTodosAction = BaseErrorAction<ActionType.ErrorTodos>;
 // getTodos end
 
+export const refreshTodosAction = () => async (dispatch: Dispatch, state: Storage): Promise<void> => {
+    const {transits} = state;
+    const req = {
+        grouping: transits.grouping,
+        order: transits.ordering,
+        searchDescr: transits.search,
+        showArchived: transits.showArchived,
+        onlyArchived: transits.onlyArchived,
+    };
+    dispatch(getTodosAction(req));
+}
+
 
 // getOneTodo begin
 export const getOneTodoAction = (id: Id) => async (dispatch: Dispatch): Promise<void> => {
@@ -107,8 +131,9 @@ export const getOneTodoAction = (id: Id) => async (dispatch: Dispatch): Promise<
 
         const todo = (await getTodoById(id)).data;
 
-        dispatch(createAction(ActionType.GotOneTodo, {todo}));
+        dispatch(createAction<GotOneTodoAction>(ActionType.GotOneTodo, {todo}));
     } catch (error) {
+        console.error(error);
         dispatch(createErrorAction(ActionType.ErrorOneTodo, error as Error, `Loading todo ${id}`));
     } finally {
         dispatch(endLoading(ActionType.LoadingOneTodo, {id}));
@@ -129,8 +154,10 @@ export const addTodoAction = (todo: AddTodoParams) => async (dispatch: Dispatch)
 
         const resTodo = (await addTodo(todo)).data;
 
-        dispatch(createAction(ActionType.AddedTodo, {todo: resTodo}));
+        dispatch(createAction<AddedTodoAction>(ActionType.AddedTodo, {todo: resTodo}));
+        dispatch(createAction<CancelEditingTodoAction>(ActionType.EndEditingTodo));
     } catch (error) {
+        console.error(error);
         dispatch(createErrorAction(ActionType.ErrorAddTodo, error as Error, `Adding todo "${todo.description}"`));
     } finally {
         dispatch(endLoading(ActionType.AddingTodo));
@@ -150,8 +177,10 @@ export const updateTodoAction = (todo: Todo) => async (dispatch: Dispatch): Prom
 
         const resTodo = (await updateTodo(todo)).data;
 
-        dispatch(createAction(ActionType.UpdatedTodo, {todo: resTodo}));
+        dispatch(createAction<UpdatedTodoAction>(ActionType.UpdatedTodo, {todo: resTodo}));
+        dispatch(createAction<CancelEditingTodoAction>(ActionType.EndEditingTodo));
     } catch (error) {
+        console.error(error);
         dispatch(createErrorAction(ActionType.ErrorUpdateTodo, error as Error, `Updating todo ${todo._id}`));
     } finally {
         dispatch(endLoading(ActionType.UpdatingTodo, {id: todo._id}));
@@ -171,8 +200,9 @@ export const deleteTodoAction = (id: Id) => async (dispatch: Dispatch): Promise<
 
         const resTodo = (await deleteTodo(id)).data;
 
-        dispatch(createAction(ActionType.RemovedTodo, {todo: resTodo}));
+        dispatch(createAction<RemovedTodoAction>(ActionType.RemovedTodo, {todo: resTodo}));
     } catch (error) {
+        console.error(error);
         dispatch(createErrorAction(ActionType.ErrorRemoveTodo, error as Error, `Removing todo "${id}"`));
     } finally {
         dispatch(endLoading(ActionType.RemovingTodo, {id}));
@@ -192,8 +222,9 @@ export const getDomainAreasAction = (req: ReferenceRequest) => async (dispatch: 
 
         const reference = (await getDomainAreas(req)).data;
 
-        dispatch(createAction(ActionType.GotDomainAreas, {reference}));
+        dispatch(createAction<GotDomainAreasAction>(ActionType.GotDomainAreas, {reference}));
     } catch (error) {
+        console.error(error);
         dispatch(createErrorAction(ActionType.ErrorDomainAreas, error as Error, 'Loading domain areas ref'));
     } finally {
         dispatch(endLoading(ActionType.LoadingDomainAreas));
@@ -213,8 +244,9 @@ export const getPrioritiesAction = (req: ReferenceRequest) => async (dispatch: D
 
         const reference = (await getPriorities(req)).data;
 
-        dispatch(createAction(ActionType.GotPriorities, {reference}));
+        dispatch(createAction<GotPrioritiesAction>(ActionType.GotPriorities, {reference}));
     } catch (error) {
+        console.error(error);
         dispatch(createErrorAction(ActionType.ErrorPriorities, error as Error, 'Loading priorities ref'));
     } finally {
         dispatch(endLoading(ActionType.LoadingPriorities));
@@ -227,3 +259,24 @@ export type GotPrioritiesAction = BaseAction<ActionType.GotPriorities> & {
 export type ErrorPrioritiesAction = BaseErrorAction<ActionType.ErrorPriorities>;
 // getPriorities end
 
+// Filtering, presenting, sorting begin
+export type FilterArchiveAction = BaseAction<ActionType.FilterArchive> & {
+    filtering: ArchiveFiltering;
+}
+
+export type SetGroupingAction = BaseAction<ActionType.SetGrouping> & {
+    grouping?: Grouping;
+}
+export type SetOrderingAction = BaseAction<ActionType.SetOrdering> & {
+    ordering?: Ordering;
+}
+export type FilterByDescriptionAction = BaseAction<ActionType.FilterByDescription> & {
+    search?: string;
+}
+// Filtering, presenting, sorting end
+
+export type EditingNewTodoAction = BaseLoadingAction<ActionType.EditingNewTodo>;
+export type EditingTodoAction = BaseLoadingAction<ActionType.EditingTodo> & {
+    todo: Todo;
+};
+export type CancelEditingTodoAction = BaseLoadingAction<ActionType.EndEditingTodo>;

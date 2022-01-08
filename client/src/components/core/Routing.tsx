@@ -12,7 +12,6 @@ const buildRoute = (r: ArrayElement<typeof routesDef>) => {
     return <Route exact path={r.path} key={r.key}>
         <Helmet title={r.title} />
         <React.Suspense fallback={<div className='global__container'><Spin /></div>}>
-            
             <FormComponent />
         </React.Suspense>
     </Route>;

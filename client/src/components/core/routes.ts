@@ -1,6 +1,6 @@
 import React from "react";
 
-const AppReducer = React.lazy(() => import ('../../reducer_and_context/AppReducer'));
+const AppReducer = React.lazy(() => import ('../../reducer_and_context/AppReducerAndContext'));
 const AppStyledReducer = React.lazy(() => import ('../../styled_reducer_and_context/AppStyledReducer'))
 const AppRecoil = React.lazy(() => import ('../../recoil/AppRecoil'));
 const AppReduxSlices = React.lazy(() => import ('../../redux_slices/AppReduxSlices'));
