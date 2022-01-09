@@ -10,15 +10,17 @@ import {
     FilterByDescriptionAction,
 } from './store/actions';
 import {Header} from '../components/core/Header';
+import {ItemsContainer} from '../components/core/ItemsContainer';
 import {GroupingRef, OrderingRef, FilteringRef} from '../utils/references';
 import {storageToFilteringValue, hasActivity} from '../utils/helpers';
 import {ArrayElement} from '../typings/ts-helpers';
+import { updateTemplateSpan } from "typescript";
 
 const logger = (name: string) => arg => console.log(`${name}: `, arg, ` - ${typeof arg}`);
 
 const App: React.FC = () => {
     const {state, dispatch} = useStore();
-    const {transits: {grouping, ordering, search}} = state;
+    const {transits: {grouping, ordering, search}, transits} = state;
     const flag = storageToFilteringValue(state);
 
     const onFilter = useCallback((value: ArrayElement<FilteringRef>) => {
@@ -41,10 +43,13 @@ const App: React.FC = () => {
         setTimeout(() => dispatch(refreshTodosAction()), 0);
     }, []);
 
+    const disabled = hasActivity(state);
+    const items = grouping === undefined ? state.todos : state.groupedTodos;
+
     return <div className='global__root-node'>
         <Header
             title='React useReducer with global context'
-            disabled={hasActivity(state)}
+            disabled={disabled}
             filtering={flag}
             grouping={grouping}
             ordering={ordering}
@@ -53,6 +58,17 @@ const App: React.FC = () => {
             onGrouping={onGrouping}
             onSorting={onSorting}
             onSearch={onSearching}
+            count={items.length}
+        />
+        <ItemsContainer
+            items={items}
+            disabled={disabled}
+            loading={transits.todosIsLoading}
+            grouping={transits.grouping}
+            editingTodo={transits.editingTodo}
+            oneTodoError={transits.oneTodoError}
+            updatingTodoError={transits.updatingTodoError}
+            removingTodoError={transits.removingTodoError}
         />
     </div>;
 }

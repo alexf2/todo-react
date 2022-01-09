@@ -1,10 +1,11 @@
 import React, {FC, useCallback, ChangeEvent} from 'react';
-import {PageHeader, Input, Space, Select} from 'antd';
+import {PageHeader, Input, Space, Select, Badge} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import {Grouping, Ordering, ArchiveFiltering} from '../../utils/api';
 import {GROUPING_REF, ORDERING_REF, FILTERING_REF, GroupingRef, OrderingRef, FilteringRef} from '../../utils/references';
 import {ArrayElement} from '../../typings/ts-helpers';
 import styles from './headers.less';
+
 
 const REFERENCE_MAPPING = {
     label: 'name',
@@ -25,10 +26,11 @@ type HeaderProps = {
     onGrouping?: (option: Partial<ArrayElement<GroupingRef>>) => void;
     onSorting?: (option: Partial<ArrayElement<OrderingRef>>) => void;
     onSearch?: (value: string) => void;
+    count: number;
 };
 
 export const Header: FC<HeaderProps> = React.memo(props => {
-    const {title, disabled, filtering, grouping, ordering, search} = props;
+    const {title, disabled, filtering, grouping, ordering, search, count} = props;
     const {onFilterArchive, onGrouping, onSorting, onSearch} = props;
 
     const archiveFilteringHandler = useCallback((value: ArchiveFiltering, option: /*ArrayElement<FilteringRef>*/any) => {
@@ -54,7 +56,10 @@ export const Header: FC<HeaderProps> = React.memo(props => {
         onSearch && onSearch(ev.target.value as any as string);
     }, [onSearch]);
 
-    return <PageHeader title={title} footer={
+    return <PageHeader
+        title={title} 
+        tags={<Badge style={{backgroundColor: '#52c41a'}} count={count} overflowCount={1000} />}
+        footer={
         <div className={styles.container}>
             <Space>
                 <Select<ArchiveFiltering, ArrayElement<FilteringRef>>
