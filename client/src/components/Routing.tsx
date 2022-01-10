@@ -4,7 +4,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import {Spin} from 'antd';
 import {Navigation} from './Navigation';
 import {routesDef} from './routes';
-import {ArrayElement} from '../../typings';
+import {ArrayElement} from '../typings';
 
 const buildRoute = (r: ArrayElement<typeof routesDef>) => {
     const FormComponent = r.formComponent;

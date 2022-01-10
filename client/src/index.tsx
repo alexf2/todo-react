@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {HelmetProvider} from 'react-helmet-async';
 import {BrowserRouter} from 'react-router-dom';
-import {AppRoot} from './components/core';
+import {AppRoot} from './components';
 import 'antd/dist/antd.less';
 import './globalStyles/main.less';
 

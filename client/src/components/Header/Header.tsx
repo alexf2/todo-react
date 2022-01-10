@@ -4,7 +4,7 @@ import {SearchOutlined} from '@ant-design/icons';
 import {Grouping, Ordering, ArchiveFiltering} from '../../utils/api';
 import {GROUPING_REF, ORDERING_REF, FILTERING_REF, GroupingRef, OrderingRef, FilteringRef} from '../../utils/references';
 import {ArrayElement} from '../../typings/ts-helpers';
-import styles from './headers.less';
+import styles from './header.less';
 
 
 const REFERENCE_MAPPING = {
@@ -57,9 +57,9 @@ export const Header: FC<HeaderProps> = React.memo(props => {
     }, [onSearch]);
 
     return <PageHeader
-        title={title} 
-        tags={<Badge style={{backgroundColor: '#52c41a'}} count={count} overflowCount={1000} />}
-        footer={
+            title={title} 
+            tags={<Badge style={{backgroundColor: '#52c41a'}} count={count} overflowCount={1000} />}
+            >
         <div className={styles.container}>
             <Space>
                 <Select<ArchiveFiltering, ArrayElement<FilteringRef>>
@@ -111,7 +111,6 @@ export const Header: FC<HeaderProps> = React.memo(props => {
                 value = {search}
             />
         </div>
-    }>
     </PageHeader>
 });
 

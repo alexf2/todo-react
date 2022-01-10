@@ -9,14 +9,12 @@ import {
     SetOrderingAction,
     FilterByDescriptionAction,
 } from './store/actions';
-import {Header} from '../components/core/Header';
-import {ItemsContainer} from '../components/core/ItemsContainer';
+import {Header} from '../components/Header/Header';
+import {ItemsContainer} from '../components/ItemsContainer/ItemsContainer';
 import {GroupingRef, OrderingRef, FilteringRef} from '../utils/references';
 import {storageToFilteringValue, hasActivity} from '../utils/helpers';
 import {ArrayElement} from '../typings/ts-helpers';
-import { updateTemplateSpan } from "typescript";
 
-const logger = (name: string) => arg => console.log(`${name}: `, arg, ` - ${typeof arg}`);
 
 const App: React.FC = () => {
     const {state, dispatch} = useStore();
@@ -69,6 +67,9 @@ const App: React.FC = () => {
             oneTodoError={transits.oneTodoError}
             updatingTodoError={transits.updatingTodoError}
             removingTodoError={transits.removingTodoError}
+            oneTodoIsLoading={transits.oneTodoIsLoading}
+            updatingTodo={transits.updatingTodo}
+            removingTodo={transits.removingTodo}
         />
     </div>;
 }

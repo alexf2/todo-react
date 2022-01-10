@@ -3,7 +3,7 @@ import {NavLink, useLocation} from 'react-router-dom';
 import {Layout, Menu} from 'antd';
 import {BlockOutlined} from '@ant-design/icons';
 import {routesDef} from './routes';
-import {ArrayElement} from '../../typings';
+import {ArrayElement} from '../typings';
 
 const {Sider} = Layout;
 const {Item} = Menu;

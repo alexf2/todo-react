@@ -1,0 +1,43 @@
+@import '~antd/lib/style/themes/default.less';
+
+.item {
+    height: 80px;
+    border: 1px solid @border-color-base;
+    border-radius: 4px 4px 12px 12px;
+    background-color: #fffefa;
+    margin: 8px 0;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+ 
+.head {
+    margin: 0 4px;
+    padding: 4px;
+    border-bottom: 1px solid @border-color-base;
+    flex: 0 1 auto;
+    font-size: @heading-5-size;
+    font-weight: 600;
+}
+
+.descr {
+    margin: 0 4px;
+    padding: 8px;
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+}
+
+.priority :global(.ant-badge-status-dot) { /* to increase size */
+    width: 10px;
+    height: 10px;
+}
+
+.tooltip {
+    opacity: 0.6;
+}

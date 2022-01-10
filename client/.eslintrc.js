@@ -62,6 +62,7 @@ module.exports = {
         "spaced-comment": 0,
         "no-unused-vars": 1,
         "valid-jsdoc": 0,
+        "no-underscore-dangle": 0,
         // 'no-use-before-define': 0,
         // '@typescript-eslint/no-use-before-define': ["error"],
         "import/extensions": 0,
