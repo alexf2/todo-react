@@ -1,8 +1,8 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useMemo, useCallback} from 'react';
 import * as cn from 'classname';
 import moment from 'moment';
-import {FileZipOutlined} from '@ant-design/icons';
-import {Badge, Tooltip} from 'antd';
+import {Badge, Tooltip, Space, Button} from 'antd';
+import {FileZipOutlined, CheckOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
 import {TodoExt, PriorityEnum} from '../../typings/dto';
 import styles from './todoItem.less';
 
@@ -37,8 +37,13 @@ const formatDueDays = days => {
 
 export const TodoItem: FC<TodoItemProps> = React.memo((props: TodoItemProps) => {
     const {domainArea: {name}, priority: {code, name: priority}, isArchived,
-        dueDate, estimationHours, finishedOn, dueDays, isOnTime, isFinished} = props;
+        dueDate, estimationHours, finishedOn, dueDays, isOnTime, isFinished, disabled} = props;
     const stat = useMemo(() => priorityToStatusColor(code), [code]);
+
+    const done = useCallback(() => alert('done'), []);
+    const edit = useCallback(() => alert('edit'), []);
+    const archive = useCallback(() => alert('archive'), []);
+    const remove = useCallback(() => alert('remove'), []);
 
     return <div className={cn(styles.item, {[styles.itemFinished]: isFinished})}>
          <div className={styles.head}>
@@ -51,17 +56,62 @@ export const TodoItem: FC<TodoItemProps> = React.memo((props: TodoItemProps) => 
             </div>
 
             <div className={styles.headDate}>
-                {estimationHours && <span>H: {estimationHours}&nbsp;</span>}
-                <span>Due: {moment(dueDate).format(moment.HTML5_FMT.DATE)}&nbsp;</span>
-                {!isFinished && <span className={cn({[styles.headDateHighlight]: !isOnTime})}>Days to: {dueDays}&nbsp;</span>}
+                {estimationHours && <span>H: {estimationHours},&nbsp;&nbsp;</span>}
+                <span>Due: {moment(dueDate).format(moment.HTML5_FMT.DATE)},&nbsp;&nbsp;</span>
+                {!isFinished && <span className={cn({[styles.headDateHighlight]: !isOnTime})}>Days to: {dueDays}&nbsp;&nbsp;</span>}
                 {isFinished && <span className={cn({[styles.headDateHighlight]: !isOnTime})}>Finished on: {moment(finishedOn).format(moment.HTML5_FMT.DATE)}{formatDueDays(dueDays)}</span>}
             </div>
 
             <div className={styles.headControl}>
-                <span>done&nbsp;</span>
-                <span>edit&nbsp;</span>
-                <span>archive&nbsp;</span>
-                <span>remove&nbsp;</span>
+                <Space>
+                    {!isArchived && !isFinished && <Button
+                        disabled={disabled}
+                        size='small'
+                        onClick={done}
+                        icon={
+                            <CheckOutlined 
+                                title='Done'
+                                style={{color: 'green'}}
+                            />
+                    } />}
+
+                    {!isArchived && !isFinished && <Button
+                        disabled={disabled}
+                        size='small'
+                        onClick={edit}
+                        icon={
+                            <EditOutlined 
+                                title='Edit'
+                            />
+                    } />}
+
+                    {!isArchived && isFinished && <Button
+                        disabled={disabled}
+                        size='small'
+                        onClick={archive}
+                        icon={
+                            <FileZipOutlined 
+                                title='Archive'
+                                style={{color: 'burlywood'}}
+                            />
+                    } />}
+
+                    <Button
+                        disabled={disabled}
+                        size='small'
+                        onClick={remove}
+                        danger
+                        icon={
+                            <DeleteOutlined
+                                title='Remove'
+                            />
+                    } />
+
+                    {/*<span>done&nbsp;</span>
+                    <span>edit&nbsp;</span>
+                    <span>archive&nbsp;</span>
+                    <span>remove&nbsp;</span>*/}
+                </Space>
             </div>
 
          </div>

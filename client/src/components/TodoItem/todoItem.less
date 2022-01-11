@@ -21,7 +21,7 @@
  
 .head {
     margin: 0 4px;
-    padding: 4px;
+    padding: 4px 4px 8px 4px;
     border-bottom: 1px solid @border-color-base;
     flex: 0 1 auto;
     display: flex;
@@ -29,15 +29,18 @@
     &__group {
         display: flex;
         flex: 1 1 auto;
+        align-items: center;
 
         &-name {
             font-size: @heading-5-size;
             font-weight: 600;
         }
+
     }
     &__date {
         display: flex;
-        flex: 0 1 45%;
+        flex: 0 1 35%;
+        align-items: center;
 
         &-highlight {
             color: red;
@@ -47,6 +50,7 @@
         display: flex;
         flex: 0 1 20%;
         justify-content: flex-end;
+        align-items: center;
     }
 }
 
