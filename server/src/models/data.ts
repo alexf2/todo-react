@@ -1,8 +1,8 @@
 import moment from 'moment'
 import {DomainArea, Priority, PriorityEnum, AreaEnum} from './todos';
 
-const START_DATE = moment('2021-11-27', moment.HTML5_FMT.DATE).utc().startOf('day');
-const OLD_DATE = moment('2019-09-15', moment.HTML5_FMT.DATE).utc().startOf('day');
+const START_DATE = moment('2022-02-15', moment.HTML5_FMT.DATE).utc().startOf('day');
+const OLD_DATE = moment('2022-01-11', moment.HTML5_FMT.DATE).utc().startOf('day');
 
 export const priorities = [
     {code: PriorityEnum.Low, name: 'Low', _id: '188156dc034e2bde5d2b7161'},
@@ -142,6 +142,15 @@ export const getTodos = (p: Priority[], da: DomainArea[]) => {
             priority: getP(PriorityEnum.High),
             domainArea: getD(AreaEnum.CottageMaintaining),
             finishedOn: OLD_DATE.clone().add(7, 'day').toDate(),
+        },
+        {
+            _id: '6188121d19b6e7a476b0e38b',
+            description: 'Wire RJ45 cable 2 long',
+            dueDate: OLD_DATE.clone().add(25, 'day').toDate(),
+            estimationHours: 6,
+            priority: getP(PriorityEnum.Critical),
+            domainArea: getD(AreaEnum.CottageMaintaining),
+            finishedOn: OLD_DATE.clone().add(26, 'day').toDate(),
         },
     ];
 }

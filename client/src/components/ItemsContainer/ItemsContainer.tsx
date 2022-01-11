@@ -40,10 +40,19 @@ type FlatViewProps = {
 };
 
 const FlatView: FC<FlatViewProps> = (props: FlatViewProps) => {
-    const {items} = props;
+    const {items, disabled, oneTodoIsLoading, updatingTodo, removingTodo,
+        oneTodoError, updatingTodoError, removingTodoError, editingTodo,
+    } = props;
 
     return <div>{
-        items.map(it => <TodoItem key={it._id} {...it} />)
+        items.map(it => {
+            const {_id: id} = it;
+            const loading = oneTodoIsLoading[id] || updatingTodo[id] || removingTodo[id];
+            const dFlag = disabled || loading;
+            const error = oneTodoError[id] || updatingTodoError[id] || removingTodoError[id];
+
+            return <TodoItem key={id} {...it} disabled={dFlag} loading={loading} editing={editingTodo === id} error={error} />;
+    })
     }</div>;
 }
 

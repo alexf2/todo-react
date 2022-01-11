@@ -90,7 +90,11 @@ export const addCalculatedTodo = (item: Todo) => {
     const now = moment().utc().startOf('day');
 
     const dueDays = dueDate ? moment(dueDate).diff(finishedOn || now, 'days') : null;
-    const isOnTime = dueDate ? now.isSameOrBefore(dueDate) : true;
+    let isOnTime;
+    if (item.finishedOn)
+        isOnTime = dueDate ? moment(finishedOn).isSameOrBefore(dueDate) : true;
+    else
+        isOnTime = dueDate ? now.isSameOrBefore(dueDate) : true;
 
     return {...item, dueDays, isOnTime, isFinished: !!item.finishedOn};
 };

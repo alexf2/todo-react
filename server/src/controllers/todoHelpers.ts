@@ -21,7 +21,7 @@ export const getTodoFilter = (searchString?: string|null, showArchived?: boolean
     const needsSearch = !!searchString;
     const hideArchived = !showArchived;
 
-    if (!needsSearch && !hideArchived) {
+    if (!needsSearch && !hideArchived && !onlyArchived) {
         return;
     }
     
@@ -41,7 +41,7 @@ export const getTodoFilter = (searchString?: string|null, showArchived?: boolean
     if (needsSearch) {
         res = searchFilter;
     }
-    if (hideArchived) {
+    if (hideArchived || onlyArchived) {
         res = {...res, ...archiveFilter};
     }
     if (needsAnd) {

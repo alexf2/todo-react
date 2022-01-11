@@ -105,7 +105,7 @@ const rules = {
         use: [
             getStyleLoader(),
             getCssLoader(2, {sourceMap: !isProduction,
-                modules: {localIdentName: '[name]__[local]#[hash:base64:5]'},
+                modules: {exportLocalsConvention: 'camelCase', localIdentName: '[name]__[local]#[hash:base64:5]'},
             }),
             {loader: 'typed-css-modules-loader',
                 options: {camelCase: true, noEmit: isProduction, context: PATHS.build},
